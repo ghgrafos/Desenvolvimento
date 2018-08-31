@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Gilmar Pimenta",
+      "email": "grafos@outlook.com.br.com.br"
+    },
+    {
+      "id": 2,
+      "name": "Maria Claudia Fontes",
+      "email": "mcf@empresa.com"
+    }
+  ]
+}

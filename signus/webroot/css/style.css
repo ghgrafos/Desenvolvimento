@@ -27,3 +27,7 @@ header{
 .top-bar ul li a:hover{
     color: #2EFE2E;
 }
+.logo{
+    font-size: 38px;
+    color: white;
+}

@@ -1,107 +1,69 @@
 <?php
+/**
+ * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link      https://cakephp.org CakePHP(tm) Project
+ * @since     0.2.9
+ * @license   https://opensource.org/licenses/mit-license.php MIT License
+ */
 namespace App\Controller;
 
-use App\Controller\AppController;
+use Cake\Core\Configure;
+use Cake\Http\Exception\ForbiddenException;
+use Cake\Http\Exception\NotFoundException;
+use Cake\View\Exception\MissingTemplateException;
 
 /**
- * Pages Controller
+ * Static content controller
  *
- * @property \App\Model\Table\PagesTable $Pages
+ * This controller will render views from Template/Pages/
  *
- * @method \App\Model\Entity\Page[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @link https://book.cakephp.org/3.0/en/controllers/pages-controller.html
  */
 class PagesController extends AppController
 {
 
     /**
-     * Index method
+     * Displays a view
      *
-     * @return \Cake\Http\Response|void
+     * @param array ...$path Path segments.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Http\Exception\ForbiddenException When a directory traversal attempt.
+     * @throws \Cake\Http\Exception\NotFoundException When the view file could not
+     *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
      */
-    public function index()
+    public function display(...$path)
     {
-        $pages = $this->paginate($this->Pages);
+        $count = count($path);
+        if (!$count) {
+            return $this->redirect('/');
+        }
+        if (in_array('..', $path, true) || in_array('.', $path, true)) {
+            throw new ForbiddenException();
+        }
+        $page = $subpage = null;
 
-        $this->set(compact('pages'));
-    }
+        if (!empty($path[0])) {
+            $page = $path[0];
+        }
+        if (!empty($path[1])) {
+            $subpage = $path[1];
+        }
+        $this->set(compact('page', 'subpage'));
 
-    /**
-     * View method
-     *
-     * @param string|null $id Page id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $page = $this->Pages->get($id, [
-            'contain' => []
-        ]);
-
-        $this->set('page', $page);
-    }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $page = $this->Pages->newEntity();
-        if ($this->request->is('post')) {
-            $page = $this->Pages->patchEntity($page, $this->request->getData());
-            if ($this->Pages->save($page)) {
-                $this->Flash->success(__('The page has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+        try {
+            $this->render(implode('/', $path));
+        } catch (MissingTemplateException $exception) {
+            if (Configure::read('debug')) {
+                throw $exception;
             }
-            $this->Flash->error(__('The page could not be saved. Please, try again.'));
+            throw new NotFoundException();
         }
-        $this->set(compact('page'));
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Page id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $page = $this->Pages->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $page = $this->Pages->patchEntity($page, $this->request->getData());
-            if ($this->Pages->save($page)) {
-                $this->Flash->success(__('The page has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The page could not be saved. Please, try again.'));
-        }
-        $this->set(compact('page'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Page id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $page = $this->Pages->get($id);
-        if ($this->Pages->delete($page)) {
-            $this->Flash->success(__('The page has been deleted.'));
-        } else {
-            $this->Flash->error(__('The page could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
     }
 }

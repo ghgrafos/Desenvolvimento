@@ -26,41 +26,14 @@
       ga('foundation.send', 'pageview');
 
 </script>
-<style>
-  /*icon styles*/
-  .fi-social-facebook {
-    color: dodgerblue;
-    font-size: 2rem;
-  }
-  .fi-social-youtube {
-    color: red;
-    font-size: 2rem;
-  }
-  .fi-social-pinterest {
-    color: darkred;
-    font-size: 2rem;
-  }
-  i.fi-social-instagram {
-    color: brown;
-    font-size: 2rem;
-  }
-  i.fi-social-tumblr {
-    color: navy;
-    font-size: 2rem;
-  }
-  .fi-social-twitter {
-    color: skyblue;
-    font-size: 2rem;
-  }
 
-</style>
 
 <header>
   <!-- Sub Navigation -->
   <div class="top-bar">
     <div class="top-bar-left">
       <ul class="menu">
-        <li><a href="/staticpages/display">HOME</a></li>
+        <li><a href="/images/display">GALERIA</a></li>
         <li><a href="/staticpages/about">SOBRE</a></li>
         <li><a href="/staticpages/contact">CONTATO</a></li>
         <li><a href="/pages">LOGIN</a></li>
@@ -81,7 +54,7 @@
   <article class="grid-container">
     <div class="grid-x grid-margin-x">
       <div class="medium-4 cell">
-      <p><?php echo $this->Html->image('/upload/logo-signus.png', ['alt'=>'logo']);?></p>
+      <p><a href="/"><?php echo $this->Html->image('/upload/logo-signus.png', ['alt'=>'logo']);?></a></p>
       </div>
       <div class="medium-8 cell">
       <p><?php echo $this->Html->image('/upload/banner.png', ['alt'=>'logo']);?></p>
@@ -100,7 +73,7 @@
   <div class="grid-x grid-margin-x expanded callout secondary">
 
     <div class="large-4 cell">
-      <h5>FLICKR IMAGES</h5>
+      <h5>Web@Signus-sign-gallery</h5>
       <div class="grid-x small-up-4">
         <div class="cell"><img class="thumbnail" src="https://placehold.it/75" alt="image of space dog"></div>
         <div class="cell"><img class="thumbnail" src="https://placehold.it/75" alt="image of space dog"></div>
@@ -115,7 +88,7 @@
     </div>
 
     <div class="large-4 cell">
-      <h5>FLICKR IMAGES</h5>
+      <h5>CATEGORIAS</h5>
       <span class="secondary label">Space</span>
       <span class="secondary label">Galaxies</span>
       <span class="secondary label">Milky Way</span>
@@ -127,7 +100,7 @@
     </div>
 
     <div class="large-4 cell">
-      <h5>RANDOM MAG</h5>
+      <h5>Signus Plataforma</h5>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti quam voluptatum vel repellat ab similique molestias molestiae ea omnis eos, id asperiores est praesentium, voluptate officia nulla aspernatur sequi aliquam.</p>
     </div>
 
@@ -144,7 +117,7 @@
 
     <div class="medium-6 cell">
       <ul class="menu align-right">
-        <li class="menu-text">Copyright © 2099 Random Mag</li>
+        <li class="menu-text">Copyright © 2019 Signus Plataforma</li>
       </ul>
     </div>
   </div>
